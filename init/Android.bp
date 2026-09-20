@@ -15,9 +15,11 @@ prebuilt_etc {
     vendor: true,
 }
 
+// init only parses init.<hardware>.rc from etc/init/hw, so this one goes
+// to etc/init to make sure its actions actually run.
 prebuilt_etc {
     name: "init.mi_service.rc",
     src: "init.mi_service.rc",
-    sub_dir: "init/hw",
+    sub_dir: "init",
     vendor: true,
 }
