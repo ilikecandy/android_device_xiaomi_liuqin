@@ -1,2 +1,5 @@
 # Dolby Media Setting (DMS) HAL - backs the Atmos DAP audio effect
 vendor.dolby.hardware.dms::IDms u:object_r:hal_dolby_dms_hwservice:s0
+
+# Xiaomi Touchfeature HAL - pen mode / gesture feature control channel
+vendor.xiaomi.hw.touchfeature::ITouchFeature u:object_r:hal_touchfeature_hwservice:s0

@@ -15,3 +15,6 @@
 # generic vendor_data_file lets hal_dolby_dms run enforcing without handing it
 # access to every other /data/vendor subdirectory.
 /data/vendor/dolby(/.*)? u:object_r:dolby_vendor_data_file:s0
+
+# Xiaomi Touch feature HAL - enables the Novatek stylus reporting path
+/vendor/bin/hw/vendor\.xiaomi\.hw\.touchfeature@1\.0-service u:object_r:hal_touchfeature_default_exec:s0

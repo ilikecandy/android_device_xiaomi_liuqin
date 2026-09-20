@@ -1,0 +1,32 @@
+# Xiaomi touch feature HAL (vendor.xiaomi.hw.touchfeature@1.0-service).
+#
+# Talks to the Novatek touch controller driver via /dev/xiaomi-touch to
+# enable/disable per-feature reporting paths. On liuqin the pen input device
+# (NVTCapacitivePen) is gated on this: the driver keeps the pen input device
+# disabled until pen_bluetooth_connect / pen_charge_connect are set, which only
+# the touchfeature HAL propagates (NVT log: "DISABLE pen input device").
+type hal_touchfeature_default, domain;
+type hal_touchfeature_default_exec, exec_type, vendor_file_type, file_type;
+type hal_touchfeature_hwservice, hwservice_manager_type;
+
+init_daemon_domain(hal_touchfeature_default)
+
+hwbinder_use(hal_touchfeature_default)
+add_hwservice(hal_touchfeature_default, hal_touchfeature_hwservice)
+
+# The HIDL runtime waits on hwservicemanager.ready before registering
+# (same failure mode documented in hal_dolby_dms.te).
+get_prop(hal_touchfeature_default, hwservicemanager_prop)
+
+# Feature control channel(s): /dev/xiaomi-touch (+ -knock, -thp) are labelled
+# touchfeature_device by sm8450-common sepolicy.
+allow hal_touchfeature_default touchfeature_device:chr_file rw_file_perms;
+
+# tp_dev sysfs knobs chowned by the blob init rc (fod_status et al).
+allow hal_touchfeature_default sysfs_tp_touchfeature:dir search;
+allow hal_touchfeature_default sysfs_tp_touchfeature:file rw_file_perms;
+
+# Clients observed on-device: system_app (pen settings / parts) and the
+# framework. Touch feature apps read through this HAL.
+allow { system_app priv_app system_server } hal_touchfeature_hwservice:hwservice_manager find;
+binder_call({ system_app priv_app system_server }, hal_touchfeature_default)
