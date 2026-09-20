@@ -22,9 +22,9 @@ get_prop(hal_touchfeature_default, hwservicemanager_prop)
 # touchfeature_device by sm8450-common sepolicy.
 allow hal_touchfeature_default touchfeature_device:chr_file rw_file_perms;
 
-# tp_dev sysfs knobs chowned by the blob init rc (fod_status et al).
-allow hal_touchfeature_default sysfs_tp_touchfeature:dir search;
-allow hal_touchfeature_default sysfs_tp_touchfeature:file rw_file_perms;
+# tp_dev sysfs knobs: sysfs_tp_touchfeature is a private-policy type,
+# not visible from vendor sepolicy; re-add via a vendor-side type if the
+# HAL is observed to need them (check avc denials on device).
 
 # Clients observed on-device: system_app (pen settings / parts) and the
 # framework. Touch feature apps read through this HAL.
