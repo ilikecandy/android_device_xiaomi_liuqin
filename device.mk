@@ -116,6 +116,12 @@ PRODUCT_PACKAGES += \
     init.mi_perf.rc \
     init.mi_service.rc
 
+# Stylus (Novatek): open the touchfeature connection at boot so the pen input
+# device is enabled without MIUI bluetooth stack. See peninit/ for the
+# from-source ioctl client + its init service.
+PRODUCT_PACKAGES += \
+    liuqin_touchctl
+
 # Input device configuration (stylus + keyboard)
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/configs/idc/Vendor_1915_Product_4d81.idc:$(TARGET_COPY_OUT_VENDOR)/usr/idc/Vendor_1915_Product_4d81.idc \

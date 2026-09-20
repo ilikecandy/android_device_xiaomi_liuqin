@@ -18,3 +18,6 @@
 
 # Xiaomi Touch feature HAL - enables the Novatek stylus reporting path
 /vendor/bin/hw/vendor\.xiaomi\.hw\.touchfeature@1\.0-service u:object_r:hal_touchfeature_default_exec:s0
+
+# Stylus connection opener (runs once at boot, see peninit/)
+/vendor/bin/liuqin_touchctl u:object_r:hal_touchfeature_default_exec:s0

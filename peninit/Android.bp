@@ -1,0 +1,11 @@
+cc_binary {
+    name: "liuqin_touchctl",
+    vendor: true,
+    srcs: ["liuqin_touchctl.c"],
+    stl: "none",
+    cflags: ["-Wall", "-Werror", "-Wno-unused-parameter"],
+    sanitize: {
+        misc_undefined: ["integer"],
+    },
+    init_rc: ["init.liuqin.pen.rc"],
+}

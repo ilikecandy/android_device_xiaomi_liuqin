@@ -1,0 +1,15 @@
+# Enable the NVTCapacitivePen input device once per boot. MIUI's bluetooth
+# stack normally pushes the stylus connection state through the touchfeature
+# HAL when the pen connects; on AOSP nothing does, so the driver keeps the
+# pen input device disabled after every boot (kernel log: "DISABLE pen input
+# device"). liuqin_touchctl issues the exact mode-20 sequence the driver
+# gates on (verified on-device: "ENABLE pen input device"). Safe with no
+# stylus present: the enabled input device just reports nothing.
+service liuqin_pen_init /vendor/bin/liuqin_touchctl pen-enable
+    user system
+    group system input
+    oneshot
+    seclabel u:r:hal_touchfeature_default:s0
+
+on property:sys.boot_completed=1
+    start liuqin_pen_init
